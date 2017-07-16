@@ -16,5 +16,5 @@ func TestAll(*testing.T) {
 	b := make([]byte, 1024)
 	r.Read(b)
 
-	fmt.Println(string(b))
+	fmt.Println(b)
 }
