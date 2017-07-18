@@ -23,6 +23,16 @@ func TestAll(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	ret := r.IsConnected()
+	if ret != true {
+		t.Fatal(ret)
+	}
+
+	ret = r.IsTimedout()
+	if ret != false {
+		t.Fatal(ret)
+	}
+
 	b := make([]byte, 64*1024)
 
 	size, err := r.Read(b)

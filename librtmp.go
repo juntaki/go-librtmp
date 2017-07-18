@@ -2,6 +2,7 @@ package rtmp
 
 // #cgo LDFLAGS: -lrtmp
 // #include <librtmp/rtmp.h>
+// #include <librtmp/log.h>
 // #include <stdlib.h>
 import "C"
 
@@ -37,12 +38,26 @@ func (r *RTMP) SetupURL(url string) error {
 	return err
 }
 
+func (r *RTMP) IsConnected() bool {
+	ret := C.RTMP_IsConnected(r.rtmp)
+	return (ret != 0)
+}
+
+func (r *RTMP) IsTimedout() bool {
+	ret := C.RTMP_IsTimedout(r.rtmp)
+	return (ret != 0)
+}
+
 func (r *RTMP) Connect() error {
 	ret, err := C.RTMP_Connect(r.rtmp, nil)
 	if ret != 0 {
 		return err
 	}
 	return nil
+}
+
+func (r *RTMP) LogSetLevel(loglevel int) {
+	C.RTMP_LogSetLevel(C.RTMP_LogLevel(loglevel))
 }
 
 func (r *RTMP) Read(p []byte) (n int, err error) {
